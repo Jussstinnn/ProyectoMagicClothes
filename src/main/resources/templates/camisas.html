@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Camisas</title>
+</head>
+<body>
+
+  <!-- Fragmento que se usará en plantilla.html -->
+  <div th:fragment="body_content">
+
+    <!-- Header -->
+<header class="site-header">
+  <div class="logo">LOGO</div>
+
+  <form class="search-form">
+    <input class="search-input" type="text" placeholder="Buscar productos" />
+    <i class="fas fa-search search-icon"></i>
+  </form>
+
+  <div class="header-buttons">
+ 
+  <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+
+                    <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+
+  </div>
+</header>
+
+    <!-- Menú -->
+    <div th:replace="fragments/menu :: menu"></div> 
+
+    <!-- Título -->
+    <h1 style="text-align: center;">Camisas</h1>
+
+    <!-- Productos (dinámicos desde backend) -->
+    <section class="products" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px;">
+        <div th:each="camisa, iterStat : ${camisas}" style="display: contents;"> <!-- no afecta el diseño -->
+
+            <!-- Tarjeta individual -->
+            <div class="card" 
+                 style="width: 250px; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                <img th:src="${camisa.imagen}" alt="Imagen" style="width: 100%; border-radius: 6px;">
+                <div class="card-body">
+                    <h3 th:text="${camisa.nombre}">Nombre</h3>
+                    <p class="price" th:text="'₡' + ${camisa.precio}">₡0.00</p>
+                    <p>Disponible - Nuevo</p>
+                    <a class="btn btn-primary" th:href="@{'/detalles/' + ${camisa.id}}">Ver Detalles</a>
+                </div>
+            </div>
+
+            <!-- Salto de fila cada 6 productos -->
+            <div th:if="${iterStat.index % 5 == 4}" style="flex-basis: 100%; height: 0;"></div>
+
+        </div>
+    </section>
+
+  </div>
+</body>
+</html>

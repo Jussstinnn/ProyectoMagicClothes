@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Magic Clothes</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    <!-- CSS personalizado -->
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+</head>
+<body>
+    <div th:fragment="body_content">
+
+
+        <!-- Header -->
+        <header class="site-header">
+            <div class="logo">LOGO</div>
+
+            <form class="search-form">
+                <input class="search-input" type="text" placeholder="Buscar productos" />
+                <i class="fas fa-search search-icon"></i>
+            </form>
+
+            <div class="header-buttons">
+                <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+
+                <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
+                <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+
+            </div>
+        </header>
+        <div th:replace="fragments/menu :: menu"></div> 
+        <main>
+            <section class="offer-banner mb-5">
+                <button aria-label="Previous" class="btn-arrow"><i class="fas fa-arrow-left"></i></button>
+                <img alt="Modelo" class="d-none d-sm-block" height="140"
+        src="https://storage.googleapis.com/a1aa/image/24958be2-9f27-4f31-91e3-6db06b2ddb63.jpg" width="100" />
+      <div class="offer-text">
+        <h2>¡OFERTA ESPECIAL!</h2>
+        <p>Por la compra de un jogger lleva el segundo con un</p>
+        <p class="discount">50% MENOS</p>
+        <button class="btn-buy">COMPRAR</button>
+      </div>
+      <img alt="Pantalones" class="d-none d-sm-block" height="140"
+        src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="100" />
+      <button aria-label="Next" class="btn-arrow"><i class="fas fa-arrow-right"></i></button>
+    </section>
+
+    <section>
+      <div class="row g-3">
+        <div class="col-12 col-sm-4">
+          <div class="category-header lift-on-hover">NUEVOS ARTÍCULOS</div>
+          <div class="category-card lift-on-hover">
+            <img alt="Hombre caminando con camisa celeste y pantalón beige en la calle"
+              src="https://storage.googleapis.com/a1aa/image/6f7ef997-70d2-4bd1-7efa-047eb5ba1356.jpg" />
+            <div class="category-text-top">Moda</div>
+            <div class="category-text-bottom">Hombres</div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <div class="category-header lift-on-hover">LO MÁS VENDIDO</div>
+          <div class="category-card lift-on-hover">
+            <img alt="Mujer posando con vestido blanco con flores pequeñas"
+              src="https://storage.googleapis.com/a1aa/image/5af13a8f-4ac8-4aae-924b-c8573f5df668.jpg" />
+            <div class="category-text-top">Moda</div>
+            <div class="category-text-bottom">Mujeres</div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-4">
+          <div class="category-header lift-on-hover">NUEVAS OFERTAS</div>
+          <div class="category-card lift-on-hover">
+            <img alt="Hombre y mujer posando con camisetas coloridas sobre fondo lila"
+              src="https://storage.googleapis.com/a1aa/image/c1e58947-16bf-4950-50b3-c4cc6f2161a8.jpg" />
+            <div class="category-text-top">Moda</div>
+            <div class="category-text-bottom">Conjuntos</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</div>
+
+    <!-- Scripts Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
