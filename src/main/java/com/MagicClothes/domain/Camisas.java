@@ -1,19 +1,20 @@
 package com.MagicClothes.domain;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import lombok.Data;
 
-@Entity
 @Data
-public class Usuario {
+@Entity
+public class Camisas implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nombre;
-    private String apellido;
-    private String correoElectronico; 
-    private String contrasena;
-    private String ubicacion;
+    private String descripcion;
+    private double precio;
+    private Double precioAnterior;
+    private String imagen;
 }

@@ -7,198 +7,132 @@
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-
   <!-- CSS personalizado -->
   <link rel="stylesheet" th:href="@{/estilos.css}">
 </head>
 <body>
-  <header class="d-flex align-items-center justify-content-between px-4 py-4" style="margin-top: 1.5rem;">
-    <div style="font-size: 1.1rem; font-weight: 500;">LOGO</div>
-    <form class="position-relative">
-      <input class="form-control search-input" placeholder="Buscar productos" type="text" />
-      <i class="fas fa-search search-icon"></i>
-    </form>
-    <div class="d-flex gap-3" style="font-size: 0.9rem;">
-      <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
-      <button class="btn btn-outline-secondary btn-sm">Iniciar Sesión</button>
-      <button class="btn btn-outline-secondary btn-sm">Crear cuenta</button>
-    </div>
-  </header>
+  <div th:fragment="body_content">
 
-  <nav>
-    <ul class="d-flex justify-content-center flex-wrap m-0 p-0 list-unstyled">
-      <li class="mx-3">INICIO</li>
-      <li class="mx-3">COLECCIONES</li>
-      <li class="mx-3">CAMISAS</li>
-      <li class="mx-3">PANTALONES</li>
-      <li class="mx-3">VESTIDOS</li>
-      <li class="mx-3">ACCESORIOS</li>
-      <li class="mx-3">CONTACTENOS</li>
-    </ul>
-  </nav>
+    <!-- Header -->
+    <header class="site-header py-4">
+      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-  <main>
-    <section class="offer-banner mb-5">
-      <button aria-label="Previous" class="btn-arrow">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <img alt="Modelo" class="d-none d-sm-block" height="140"
-           src="https://storage.googleapis.com/a1aa/image/24958be2-9f27-4f31-91e3-6db06b2ddb63.jpg" width="100" />
-      <div class="offer-text">
-        <h2>¡OFERTA ESPECIAL!</h2>
-        <p>Por la compra de un jogger lleva el segundo con un</p>
-        <p class="discount">50% MENOS</p>
-        <button class="btn-buy">COMPRAR</button>
+        <div class="logo">LOGO</div>
+
+        <!-- 🔍 Búsqueda + Filtros centrado -->
+        <div class="d-flex align-items-center flex-wrap justify-content-center gap-2">
+          <form th:action="@{/productos/buscar}" method="get" class="d-flex align-items-center flex-wrap gap-2">
+            <input class="form-control" name="keyword" placeholder="Buscar productos" type="text" style="width: 250px;" />
+
+            <div class="dropdown">
+              <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                🔎 Filtros
+              </button>
+              <div class="dropdown-menu p-4" style="min-width: 300px;">
+                <div class="mb-3">
+                  <label class="form-label">Condición</label>
+                  <select name="estado" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="nuevo">Nuevo</option>
+                    <option value="usado">Usado</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Categoría</label>
+                  <select name="categoria" class="form-select">
+                    <option value="">Todas</option>
+                    <option value="camisas">Camisas</option>
+                    <option value="pantalones">Pantalones</option>
+                    <option value="vestidos">Vestidos</option>
+                    <option value="accesorios">Accesorios</option>
+                    <option value="conjuntos">Conjuntos</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Precio</label>
+                  <select name="precioRango" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="menos10">Menos de ₡10,000</option>
+                    <option value="entre10y20">₡10,000 a ₡20,000</option>
+                    <option value="mas20">Más de ₡20,000</option>
+                  </select>
+                </div>
+                <div class="text-end">
+                  <button type="submit" class="btn btn-dark">Aplicar filtros</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="header-buttons d-flex gap-2">
+          <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+          <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
+          <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+        </div>
+
       </div>
-      <img alt="Pantalones" class="d-none d-sm-block" height="140"
-           src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="100" />
-      <button aria-label="Next" class="btn-arrow">
-        <i class="fas fa-arrow-right"></i>
-      </button>
-    </section>
+    </header>
 
-    <section>
-      <div class="row g-3">
-        <div class="col-12 col-sm-4">
-          <div class="category-header">NUEVOS ARTÍCULOS</div>
-          <div class="category-card">
-            <img alt="Hombre caminando" src="https://storage.googleapis.com/a1aa/image/6f7ef997-70d2-4bd1-7efa-047eb5ba1356.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">Hombres</div>
+    <div th:replace="fragments/menu :: menu"></div> 
+
+    <main>
+      <section class="offer-banner mb-5">
+        <button aria-label="Previous" class="btn-arrow"><i class="fas fa-arrow-left"></i></button>
+        <img alt="Modelo" class="d-none d-sm-block" height="140"
+          src="https://storage.googleapis.com/a1aa/image/24958be2-9f27-4f31-91e3-6db06b2ddb63.jpg" width="100" />
+        <div class="offer-text">
+          <h2>¡OFERTA ESPECIAL!</h2>
+          <p>Por la compra de un jogger lleva el segundo con un</p>
+          <p class="discount">50% MENOS</p>
+          <button class="btn-buy">COMPRAR</button>
+        </div>
+        <img alt="Pantalones" class="d-none d-sm-block" height="140"
+          src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="100" />
+        <button aria-label="Next" class="btn-arrow"><i class="fas fa-arrow-right"></i></button>
+      </section>
+
+      <!-- Sección de categorías -->
+      <section>
+        <div class="row g-3">
+          <div class="col-12 col-sm-4">
+            <div class="category-header lift-on-hover">NUEVOS ARTÍCULOS</div>
+            <div class="category-card lift-on-hover">
+              <img alt="Hombre caminando con camisa celeste y pantalón beige en la calle"
+                src="https://storage.googleapis.com/a1aa/image/6f7ef997-70d2-4bd1-7efa-047eb5ba1356.jpg" />
+              <div class="category-text-top">Moda</div>
+              <div class="category-text-bottom">Hombres</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-4">
+            <div class="category-header lift-on-hover">LO MÁS VENDIDO</div>
+            <div class="category-card lift-on-hover">
+              <img alt="Mujer posando con vestido blanco con flores pequeñas"
+                src="https://storage.googleapis.com/a1aa/image/5af13a8f-4ac8-4aae-924b-c8573f5df668.jpg" />
+              <div class="category-text-top">Moda</div>
+              <div class="category-text-bottom">Mujeres</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-4">
+            <div class="category-header lift-on-hover">NUEVAS OFERTAS</div>
+            <div class="category-card lift-on-hover">
+              <img alt="Hombre y mujer posando con camisetas coloridas sobre fondo lila"
+                src="https://storage.googleapis.com/a1aa/image/c1e58947-16bf-4950-50b3-c4cc6f2161a8.jpg" />
+              <div class="category-text-top">Moda</div>
+              <div class="category-text-bottom">Conjuntos</div>
+            </div>
           </div>
         </div>
+      </section>
+    </main>
 
-        <div class="col-12 col-sm-4">
-          <div class="category-header">LO MÁS VENDIDO</div>
-          <div class="category-card">
-            <img alt="Vestido blanco" src="https://storage.googleapis.com/a1aa/image/5af13a8f-4ac8-4aae-924b-c8573f5df668.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">Mujeres</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-4">
-          <div class="category-header">NUEVAS OFERTAS</div>
-          <div class="category-card">
-            <img alt="Conjuntos coloridos" src="https://storage.googleapis.com/a1aa/image/c1e58947-16bf-4950-50b3-c4cc6f2161a8.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">Conjuntos</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+  </div>
 
   <!-- Scripts Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html><!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Oferta Especial</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-</head>
-<body>
-
-<div th:fragment="body_content">
-  <header class="d-flex align-items-center justify-content-between px-4 py-4" style="margin-top: 1.5rem;">
-    <div style="font-size: 1.1rem; font-weight: 500;">LOGO</div>
-    <form class="position-relative">
-      <input class="form-control search-input" placeholder="Buscar productos" type="text" />
-      <i class="fas fa-search search-icon"></i>
-    </form>
-    <div class="d-flex gap-3" style="font-size: 0.9rem;">
-      <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
-      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
-      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
-
-    </div>
-  </header>
-
-  <nav>
-    <ul class="d-flex justify-content-center flex-wrap m-0 p-0 list-unstyled">
-      <li class="mx-3">INICIO</li>
-      <li class="mx-3">COLECCIONES</li>
-      <li class="mx-3">CAMISAS</li>
-      <li class="mx-3">PANTALONES</li>
-      <li class="mx-3">VESTIDOS</li>
-      <li class="mx-3">ACCESORIOS</li>
-      <li class="mx-3">CONTACTENOS</li>
-    </ul>
-  </nav>
-
-  <main>
-    <!-- Special offer banner -->
-    <section class="offer-banner mb-5">
-      <button aria-label="Previous" class="btn-arrow">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <img alt="Modelo de pie vistiendo pantalones jogger grises y zapatillas blancas, con pantalones colgados al lado"
-           class="d-none d-sm-block" height="140"
-           src="https://storage.googleapis.com/a1aa/image/24958be2-9f27-4f31-91e3-6db06b2ddb63.jpg" width="100" />
-      <div class="offer-text">
-        <h2>¡OFERTA ESPECIAL!</h2>
-        <p>Por la compra de un jogger lleva el segundo con un</p>
-        <p class="discount">50% MENOS</p>
-        <button class="btn-buy">COMPRAR</button>
-      </div>
-      <img alt="Tres pantalones jogger doblados en colores negro, rosa y gris sobre fondo gris"
-           class="d-none d-sm-block" height="140"
-           src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="100" />
-      <button aria-label="Next" class="btn-arrow">
-        <i class="fas fa-arrow-right"></i>
-      </button>
-    </section>
-
-    <!-- Categories section -->
-    <section>
-      <div class="row g-3">
-        <div class="col-12 col-sm-4">
-          <div class="category-header lift-on-hover">NUEVOS ARTÍCULOS</div>
-          <div class="category-card lift-on-hover">
-            <img alt="Hombre caminando con camisa celeste y pantalón beige en la calle"
-                 src="https://storage.googleapis.com/a1aa/image/6f7ef997-70d2-4bd1-7efa-047eb5ba1356.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">Hombres</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-4">
-          <div class="category-header lift-on-hover">LO MÁS VENDIDO</div>
-          <div class="category-card lift-on-hover">
-            <img alt="Mujer posando con vestido blanco con flores pequeñas"
-                 src="https://storage.googleapis.com/a1aa/image/5af13a8f-4ac8-4aae-924b-c8573f5df668.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">MUJERES</div>
-          </div>
-        </div>
-
-        <div class="col-12 col-sm-4">
-          <div class="category-header lift-on-hover">NUEVAS OFERTAS</div>
-          <div class="category-card lift-on-hover">
-            <img alt="Hombre y mujer posando con camisetas coloridas sobre fondo lila"
-                 src="https://storage.googleapis.com/a1aa/image/c1e58947-16bf-4950-50b3-c4cc6f2161a8.jpg" />
-            <div class="category-text-top">Moda</div>
-            <div class="category-text-bottom">CONJUNTOS</div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 </html>
-
-
-
-
-
-
