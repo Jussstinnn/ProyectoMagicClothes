@@ -30,6 +30,14 @@ main {
   font-size: 0.95rem !important;
 }
 
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6c757d;
+  font-size: 0.85rem;
+}
 
 nav {
   background-color: #dbe9ff;
