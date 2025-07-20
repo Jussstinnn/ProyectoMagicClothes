@@ -52,7 +52,7 @@ CREATE TABLE carrito_item (
     FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
 );
 
- <!-- Con esto se ven -->
+ <!-- Con esto se ven .-->
 USE magicclothesdb;
 SELECT * FROM producto;
 SELECT * FROM carrito;
