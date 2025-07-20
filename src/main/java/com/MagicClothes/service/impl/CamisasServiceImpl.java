@@ -21,4 +21,12 @@ public class CamisasServiceImpl implements CamisasService {
     public Camisas getCamisasPorId(Long id) {
         return camisasRepository.findById(id).orElse(null);
     }
+    
+    @Override
+public List<Camisas> buscarPorNombre(String keyword) {
+    if (keyword == null || keyword.isBlank()) {
+        return camisasRepository.findAll();
+    }
+    return camisasRepository.findByNombreContainingIgnoreCase(keyword);
+}
 }
