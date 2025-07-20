@@ -30,3 +30,30 @@ CREATE TABLE pago (
  <!-- Con esto se ven -->
 USE magicclothesdb;
 SELECT * FROM pago;
+
+CREATE TABLE producto (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DOUBLE
+);
+
+CREATE TABLE carrito (
+    id_carrito BIGINT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(100)
+);
+
+CREATE TABLE carrito_item (
+    id_item BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_carrito BIGINT,
+    id_producto INT,
+    cantidad INT,
+    FOREIGN KEY (id_carrito) REFERENCES carrito(id_carrito),
+    FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+);
+
+ <!-- Con esto se ven .-->
+USE magicclothesdb;
+SELECT * FROM producto;
+SELECT * FROM carrito;
+SELECT * FROM carrito_item;

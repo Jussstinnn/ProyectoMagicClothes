@@ -16,10 +16,15 @@ public class PagoController {
     private PagoService pagoService;
 
     @GetMapping("/pago")
-    public String mostrarFormularioPago(Model model) {
-        model.addAttribute("pago", new Pago());
-        return "pago";
+public String mostrarFormularioPago(Model model, @RequestParam(required = false) Double monto) {
+    Pago pago = new Pago();
+    if (monto != null) {
+        pago.setMonto(monto);
     }
+    model.addAttribute("pago", pago);
+    return "pago";
+}
+
 
   @PostMapping("/pago")
 public String procesarPago(@ModelAttribute("pago") Pago pago, Model model) {

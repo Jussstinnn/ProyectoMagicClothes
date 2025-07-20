@@ -19,17 +19,6 @@ public class CamisasServiceImpl implements CamisasService {
 
     @Override
     public Camisas getCamisasPorId(Long id) {
-        // Mejor usar Optional para manejar ausencia
         return camisasRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public List<Camisas> obtenerRelacionadas(Long idActual) {
-        // Aquí validaría que idActual no sea null para evitar errores
-        if (idActual == null) {
-            // Podrías devolver todas las camisas o una lista vacía según la lógica de negocio
-            return camisasRepository.findAll();
-        }
-        return camisasRepository.findTop3ByIdNot(idActual);
     }
 }
