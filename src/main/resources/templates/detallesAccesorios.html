@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${titulo}">Detalle</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+<div th:fragment="body_content">
+
+  <!-- Header -->
+  <header class="site-header p-3 d-flex justify-content-between align-items-center flex-wrap" style="background-color: white;">
+    <!-- Logo -->
+    <div class="logo me-3 mb-2 mb-lg-0">LOGO</div>
+
+    <!-- Búsqueda -->
+    <div class="d-flex align-items-center gap-2 mb-2 mb-lg-0 flex-grow-1" style="max-width: 600px;">
+      <input type="text" class="form-control" placeholder="Buscar productos" style="flex: 1;">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+        <i class="fas fa-search me-1"></i> Filtros
+      </button>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex gap-2 mb-2 mb-lg-0">
+      <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/carrito'">Ver carrito</button>
+    </div>
+  </header>
+
+  <!-- Menú -->
+  <div th:replace="fragments/menu :: menu"></div>
+
+  <!-- Detalle del accesorio -->
+  <section class="container my-5">
+    <div class="row g-4 align-items-start">
+
+      <!-- Imagen del accesorio -->
+      <div class="col-md-6 text-center">
+        <img th:src="${accesorio.imagen}" alt="Imagen del accesorio"
+             class="img-fluid rounded shadow-sm"
+             style="max-height: 450px; object-fit: contain; cursor: pointer;"
+             data-bs-toggle="modal" data-bs-target="#imageModal">
+      </div>
+
+      <!-- Modal imagen ampliada -->
+      <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="imageModalLabel" th:text="${accesorio.nombre}">Nombre del producto</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body text-center">
+              <img th:src="${accesorio.imagen}" alt="Imagen ampliada" class="img-fluid rounded" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Información del accesorio -->
+      <div class="col-md-6">
+        <h1 class="fw-bold mb-3" th:text="${accesorio.nombre}">Nombre del accesorio</h1>
+        <p class="text-muted" th:text="${accesorio.descripcion}">Descripción del producto</p>
+
+        <div class="fs-4 fw-bold text-success mb-2">
+          ₡<span th:text="${accesorio.precio}">00000</span>
+        </div>
+        <div th:if="${accesorio.precioAnterior != null}" class="text-muted text-decoration-line-through mb-3">
+          Antes: ₡<span th:text="${accesorio.precioAnterior}">00000</span>
+        </div>
+
+        <!-- Formulario acción -->
+        <form method="post" th:action="@{/carrito/agregar}">
+          <input type="hidden" name="productoId" th:value="${accesorio.id}" />
+
+          <div class="d-flex flex-wrap gap-3">
+            <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+            <button type="button" class="btn btn-success"
+              onclick="location.href='/compra/checkout?productoId=' + [[${accesorio.id}]]">
+              Comprar ahora
+            </button>
+          </div>
+        </form>
+
+        <a href="/accesorios" class="btn btn-secondary mt-4 d-inline-block">← Volver a la tienda</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+

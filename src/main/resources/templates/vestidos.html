@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vestidos</title>
+  <link rel="stylesheet" th:href="@{/css/estilos.css}" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+<!-- Fragmento que se usará en plantilla.html -->
+<div th:fragment="body_content">
+
+  <!-- Header -->
+  <header class="site-header p-3 d-flex justify-content-between align-items-center flex-wrap" style="background-color: white;">
+    <!-- Logo -->
+    <div class="logo me-3 mb-2 mb-lg-0">LOGO</div>
+
+    <!-- Barra de búsqueda + botón filtros -->
+    <div class="d-flex align-items-center gap-2 mb-2 mb-lg-0 flex-grow-1" style="max-width: 600px;">
+      <input type="text" class="form-control" placeholder="Buscar productos" style="flex: 1;">
+      <button class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+        <i class="fas fa-search me-1"></i> Filtros
+      </button>
+    </div>
+
+    <!-- Botones de sesión -->
+    <div class="d-flex gap-2 mb-2 mb-lg-0">
+      <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/carrito'">Ver carrito</button>
+    </div>
+  </header>
+
+  <!-- Menú -->
+  <div th:replace="fragments/menu :: menu"></div>
+
+  <!-- Título -->
+  <h1 class="text-center my-4">Vestidos</h1>
+
+  <!-- Validación si no hay productos -->
+  <h2 th:if="${#lists.isEmpty(vestidos)}" class="text-center text-warning">⚠️ No hay vestidos en la base de datos</h2>
+
+  <!-- Productos -->
+  <section class="products d-flex flex-wrap gap-4 justify-content-center p-4">
+    <div th:each="vestido, iterStat : ${vestidos}" style="display: contents;">
+
+      <!-- Tarjeta individual -->
+      <div class="card shadow-sm" style="width: 250px; border-radius: 8px;">
+        <img th:src="${vestido.imagen}" alt="Imagen" class="card-img-top" style="height: 250px; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title" th:text="${vestido.nombre}" style="min-height: 48px;">Nombre</h5>
+          <p class="text-success fw-bold mb-1" th:text="'₡' + ${vestido.precio}">₡0.00</p>
+          <p class="text-muted mb-2" th:text="${vestido.descripcion}" style="min-height: 60px;">Descripción</p>
+          <a class="btn btn-primary mt-auto w-100" th:href="@{'/vestidos/' + ${vestido.id}}">Ver Detalles</a>
+        </div>
+      </div>
+
+      <!-- Salto de fila cada 5 productos -->
+      <div th:if="${iterStat.index % 5 == 4}" style="flex-basis: 100%; height: 0;"></div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

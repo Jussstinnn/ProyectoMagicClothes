@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Formulario de Pago</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background: linear-gradient(to right, #8360C3, #2EBF91);
+                font-family: 'Arial', sans-serif;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+            }
+
+            .pago-wrapper {
+                display: flex;
+                width: 90%;
+                max-width: 1000px;
+                height: 600px;
+                background-color: #fff;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .pago-imagen {
+                flex: 1;
+                max-width: 460px; /* ancho fijo acorde a tu diseño */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #e0e0f8;
+                height: 600px;
+                overflow: hidden;
+            }
+
+            .pago-imagen img {
+                height: 100%;
+                width: auto;
+                object-fit: contain;
+                max-width: 100%;
+            }
+
+
+            .pago-formulario {
+                flex: 1;
+                padding: 40px;
+                max-width: calc(1000px - 460px);
+            }
+
+            h2 {
+                text-align: center;
+                color: #333333;
+                margin-bottom: 30px;
+            }
+
+            label {
+                font-weight: bold;
+                color: #444444;
+            }
+
+            .form-control {
+                border-radius: 6px;
+            }
+
+            .btn-pagar {
+                background: linear-gradient(to right, #8360C3, #2EBF91);
+                color: #ffffff;
+                font-weight: bold;
+                border: none;
+                border-radius: 6px;
+                padding: 12px;
+                width: 100%;
+                transition: 0.3s;
+            }
+
+            .btn-pagar:hover {
+                opacity: 0.9;
+            }
+
+            .form-text {
+                font-size: 0.8rem;
+                color: #888;
+            }
+
+            .error-message {
+                color: #e74c3c;
+                font-size: 0.9rem;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="pago-wrapper">
+            <div class="pago-imagen">
+                <img src="https://lnk.ink/mSoLJ" alt="Pago Seguro">
+            </div>
+
+            <div class="pago-formulario">
+                <h2>Formulario de Pago</h2>
+
+                <form th:action="@{/pago}" method="post" th:object="${pago}">
+                    <div class="mb-3">
+                        <label for="numeroTarjeta">Número de Tarjeta</label>
+                        <input type="text" th:field="*{numeroTarjeta}" class="form-control" id="numeroTarjeta"
+                               placeholder="1234 5678 9012 3456" pattern="[0-9]{20}" required>
+                        <div class="form-text">Debe tener exactamente 20 dígitos.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="fechaExpiracion">Fecha de Expiración</label>
+                        <input type="text" th:field="*{fechaExpiracion}" class="form-control" id="fechaExpiracion"
+                               placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}" required>
+                        <div class="form-text">Formato: MM/AA</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cvv">CVV</label>
+                        <input type="text" th:field="*{cvv}" class="form-control" id="cvv" placeholder="123"
+                               pattern="\d{3}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="metodoPago">Método de Pago</label>
+                        <select th:field="*{metodoPago}" class="form-control" id="metodoPago" required>
+                            <option value="" disabled selected>Selecciona un método</option>
+                            <option th:value="TARJETA_CREDITO">Tarjeta de Crédito</option>
+                            <option th:value="TARJETA_DEBITO">Tarjeta de Débito</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="monto">Monto</label>
+                        <input type="number" th:field="*{monto}" readonly class="form-control" id="monto" />
+                    </div>
+
+
+                    <div class="error-message" th:if="${error}" th:text="${error}"></div>
+
+                    <button type="submit" class="btn btn-pagar">Pagar</button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>

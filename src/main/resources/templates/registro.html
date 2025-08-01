@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <style>
+    /* Tus estilos originales */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #7765E3;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+      max-width: 1100px;
+      background-color: #7765E3;
+      color: white;
+      height: 90vh;
+    }
+
+    .left-panel {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 30px;
+    }
+
+    .divider {
+      width: 5px;
+      background-color: white;
+      height: 85%;
+      align-self: stretch;
+    }
+
+    .right-panel {
+      flex: 2;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .password-container {
+      position: relative;
+    }
+
+    .password-container input[type="password"] {
+      padding-right: 40px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #D3DBFD;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .note {
+      margin-top: 5px;
+      font-size: 0.6rem;
+      color: #fff;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div th:fragment="body_content">
+  <div class="container">
+    <div class="left-panel">CREAR UNA CUENTA</div>
+    <div class="divider"></div>
+    <div class="right-panel">
+      <form th:action="@{/registro}" th:object="${usuario}" method="post">
+        <input type="text" th:field="*{nombre}" placeholder="Nombre" required>
+        <input type="text" th:field="*{apellido}" placeholder="Apellido" required>
+        <input type="email" th:field="*{correoElectronico}" placeholder="Correo electrónico" required>
+
+        <div class="password-container">
+          <input type="password" th:field="*{contrasena}" placeholder="Contraseña" id="password" required>
+          <button type="button" class="toggle-password" onclick="togglePassword('password')">👁️</button>
+        </div>
+
+        <div class="password-container">
+          <input type="password" placeholder="Confirmar contraseña" id="confirm-password" required>
+          <button type="button" class="toggle-password" onclick="togglePassword('confirm-password')">👁️</button>
+        </div>
+
+        <input type="text" th:field="*{ubicacion}" placeholder="Ubicación" required>
+        <button type="submit">ENVIAR</button>
+        <div class="note">* Requiere ubicación</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglePassword(id) {
+    const input = document.getElementById(id);
+    input.type = input.type === "password" ? "text" : "password";
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
