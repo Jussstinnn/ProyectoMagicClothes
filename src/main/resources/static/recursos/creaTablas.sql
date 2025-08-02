@@ -9,15 +9,15 @@ CREATE TABLE usuario (
     ubicacion VARCHAR(100) NOT NULL
 );
 
- <!-- Estos SON REGISTROS-->
+ <!-- Estos SON REGISTROS. LA CONTRASENHA EN TODOS ES 12345--> 
 INSERT INTO usuario (nombre, apellido, correo, contrasena, ubicacion) VALUES
-('Laura', 'Sánchez', 'laura@example.com', 'clave123', 'San José'),
-('Carlos', 'Ramírez', 'carlos.ramirez@example.com', 'abc456', 'Heredia'),
-('María', 'Fernández', 'mariaf@example.com', 'securepass', 'Cartago'),
-('Andrés', 'Gómez', 'andresg@example.com', 'mypassword', 'Alajuela'),
-('Lucía', 'Vargas', 'lucia.v@example.com', 'pass321', 'Limón');
+('Laura', 'Sánchez', 'laura@example.com', '$2a$10$NyDwcQyAeFFM5Cx8zi1hPu30TMSRWue7g1w.qFiciO3GbqUuXy1Ja', 'San José'),
+('Carlos', 'Ramírez', 'carlos.ramirez@example.com', '$2a$10$NyDwcQyAeFFM5Cx8zi1hPu30TMSRWue7g1w.qFiciO3GbqUuXy1Ja', 'Heredia'),
+('María', 'Fernández', 'mariaf@example.com', '$2a$10$NyDwcQyAeFFM5Cx8zi1hPu30TMSRWue7g1w.qFiciO3GbqUuXy1Ja', 'Cartago'),
+('Andrés', 'Gómez', 'andresg@example.com', '$2a$10$NyDwcQyAeFFM5Cx8zi1hPu30TMSRWue7g1w.qFiciO3GbqUuXy1Ja', 'Alajuela'),
+('Lucía', 'Vargas', 'lucia.v@example.com', '$2a$10$NyDwcQyAeFFM5Cx8zi1hPu30TMSRWue7g1w.qFiciO3GbqUuXy1Ja', 'Limón');
 
- <!-- Con esto se ven -->
+  <!-- Con esto se ven -->
 SELECT * FROM usuario;
 
 CREATE TABLE camisas (

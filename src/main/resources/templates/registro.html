@@ -104,6 +104,18 @@
       color: #fff;
       text-align: right;
     }
+        .return-button {
+        margin-top: 10px;
+        background-color: #ccc;
+        color: #333;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
   </style>
 </head>
 <body>
@@ -129,6 +141,7 @@
 
         <input type="text" th:field="*{ubicacion}" placeholder="Ubicación" required>
         <button type="submit">ENVIAR</button>
+        <button class="return-button" type="submit" onclick="location.href='/'">Volver al inicio</button>
         <div class="note">* Requiere ubicación</div>
       </form>
     </div>

@@ -136,7 +136,8 @@
 
                     <div class="mb-3">
                         <label for="monto">Monto</label>
-                        <input type="number" th:field="*{monto}" readonly class="form-control" id="monto" />
+                        <input type="number" th:field="*{monto}" class="form-control" id="monto"
+                               placeholder="0.00" min="1000" step="1000" required>
                     </div>
 
 

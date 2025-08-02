@@ -1,32 +1,42 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="${titulo}">Detalle</title>
   <link rel="stylesheet" th:href="@{/css/estilos.css}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 </head>
 <body>
 
   <div th:fragment="body_content">
 
     <!-- Header -->
-    <header class="site-header py-4">
-      <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
-        <div class="logo fw-bold">LOGO</div>
+    <header class="site-header">
+      <div class="logo">LOGO</div>
 
-        <form class="d-flex align-items-center gap-2">
-          <input class="form-control" type="text" placeholder="Buscar productos" />
-          <button class="btn btn-outline-secondary btn-sm"><i class="fas fa-search"></i></button>
-        </form>
+      <form class="search-form">
+        <input class="search-input" type="text" placeholder="Buscar productos" />
+        <i class="fas fa-search search-icon"></i>
+      </form>
 
-        <div class="d-flex gap-2">
-          <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
-          <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/login'">Iniciar Sesión</button>
-          <button class="btn btn-outline-secondary btn-sm" onclick="location.href='/registro'">Crear cuenta</button>
+      <div class="header-buttons d-flex gap-2">
+        <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+
+        <div sec:authorize="isAnonymous()">
+          <a href="/login" class="btn btn-outline-secondary btn-sm">Iniciar Sesión</a>
+          <a href="/registro" class="btn btn-outline-secondary btn-sm">Crear cuenta</a>
         </div>
+
+        <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+          <span class="text-dark" th:text="${#authentication.name}">correo@ejemplo.com</span>
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+          </form>
+        </div>
+
+        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/pago'">Ir a pago</button>
+        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/historialCompra'">Historial compra</button>
       </div>
     </header>
 
@@ -34,65 +44,64 @@
     <div th:replace="fragments/menu :: menu"></div> 
 
     <!-- Detalle del producto -->
-    <section class="detalle-producto py-5">
-      <div class="container">
-        <div class="row justify-content-center align-items-start g-5">
-          <div class="col-md-5 text-center">
-            <img th:src="${camisa.imagen}" alt="Imagen del producto"
-                 class="img-fluid rounded shadow-sm cursor-pointer" data-bs-toggle="modal" data-bs-target="#imageModal" />
-          </div>
+    <section class="detalle-producto" style="max-width: 900px; margin: auto; padding: 20px;">
+      <div class="producto-detalle d-flex gap-4 flex-wrap align-items-start">
+        <img th:src="${camisa.imagen}" alt="Imagen del producto"
+             data-bs-toggle="modal" data-bs-target="#imageModal" />
 
-          <!-- Modal imagen ampliada -->
-          <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="imageModalLabel" th:text="${camisa.nombre}">Nombre del producto</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body text-center">
-                  <img th:src="${camisa.imagen}" alt="Imagen ampliada" class="img-fluid rounded" />
-                </div>
+        <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel" th:text="${camisa.nombre}">Nombre del producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+              </div>
+              <div class="modal-body text-center">
+                <img th:src="${camisa.imagen}" alt="Imagen ampliada" class="img-fluid rounded" />
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col-md-7">
-            <h1 th:text="${camisa.nombre}" class="mb-3">Nombre de la camisa</h1>
-            <p th:text="${camisa.descripcion}" class="mb-3">Descripción del producto</p>
+        <div class="producto-info flex-grow-1">
+          <h1 th:text="${camisa.nombre}">Nombre de la camisa</h1>
+          <p th:text="${camisa.descripcion}">Descripción del producto</p>
 
-            <div class="precio fs-4 fw-bold mb-2">
-              ₡<span th:text="${camisa.precio}">00000</span>
-            </div>
-            <div th:if="${camisa.precioAnterior != null}" 
-                 class="text-muted text-decoration-line-through mb-3">
-              Antes: ₡<span th:text="${camisa.precioAnterior}">00000</span>
-            </div>
-
-            <!-- Formulario -->
-            <form method="post" th:action="@{/carrito/agregar}" class="mb-3">
-              <input type="hidden" name="productoId" th:value="${camisa.id}" />
-
-              <div class="mb-3">
-                <label for="tallaSelect" class="form-label">Selecciona la talla:</label>
-                <select class="form-select" id="tallaSelect" name="talla" required>
-                  <option value="" disabled selected>-- Elige una talla --</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
-                </select>
-              </div>
-
-              <div class="d-flex gap-3">
-                <button type="submit" class="btn btn-primary">Agregar al carrito</button>
-                <button type="button" class="btn btn-success" onclick="location.href='/compra/checkout?productoId=' + [[${camisa.id}]] + '&talla=' + document.getElementById('tallaSelect').value">Comprar ahora</button>
-              </div>
-            </form>
-
-            <a href="/camisas" class="btn btn-secondary">← Volver a la tienda</a>
+          <div class="precio fs-4 fw-bold mb-2" style="white-space: nowrap;">
+            ₡<span th:text="${camisa.precio}">00000</span>
           </div>
+          <div th:if="${camisa.precioAnterior != null}" 
+               class="precio-anterior text-muted text-decoration-line-through mb-3" style="white-space: nowrap;">
+            Antes: ₡<span th:text="${camisa.precioAnterior}">00000</span>
+          </div>
+
+          <!-- Formulario talla + botones -->
+          <form method="post" th:action="@{/carrito/agregar}">
+            <input type="hidden" name="productoId" th:value="${camisa.id}" />
+
+            <div class="mb-3">
+              <label for="tallaSelect" class="form-label">Selecciona la talla:</label>
+              <select class="form-select" id="tallaSelect" name="talla" required>
+                <option value="" disabled selected>-- Elige una talla --</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+              </select>
+            </div>
+
+            <div class="d-flex gap-3">
+              <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+              <button type="button" class="btn btn-success" 
+                      onclick="location.href='/compra/checkout?productoId=' + [[${camisa.id}]] + '&talla=' + document.getElementById('tallaSelect').value">
+                Comprar ahora
+              </button>
+            </div>
+          </form>
+          
+
+          <a href="/camisas" class="btn btn-secondary mt-4 d-inline-block">← Volver a la tienda</a>
         </div>
       </div>
     </section>

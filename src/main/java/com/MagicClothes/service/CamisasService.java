@@ -6,5 +6,4 @@ import java.util.List;
 public interface CamisasService {
     List<Camisas> getCamisas();
     Camisas getCamisasPorId(Long id);
-    List<Camisas> obtenerRelacionadas(Long id);
 }

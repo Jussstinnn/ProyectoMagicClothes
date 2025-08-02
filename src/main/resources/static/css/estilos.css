@@ -1,5 +1,7 @@
+/* ========== BASE ========== */
 html, body {
   margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   background-color: white;
 }
@@ -9,6 +11,13 @@ body {
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 2rem;
+}
+
+/* ========== CONTENEDOR GENERAL ========== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
 header, nav, main {
@@ -23,11 +32,44 @@ main {
   margin: 4rem auto 6rem auto;
 }
 
+/* ========== HEADER ========== */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #1e3a8a;
+}
+
+/* ========== BARRA DE BÚSQUEDA ========== */
+.search-form {
+  position: relative;
+  flex-grow: 1;
+  max-width: 400px;
+  margin: 0 2rem;
+}
+
 .search-input {
-  padding-left: 2rem;
-  width: 350px !important;
-  height: 42px !important;
-  font-size: 0.95rem !important;
+  width: 100%;
+  height: 42px;
+  padding: 0.5rem 2.5rem 0.5rem 2rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 5px #1e3a8a;
 }
 
 .search-icon {
@@ -37,29 +79,91 @@ main {
   transform: translateY(-50%);
   color: #6c757d;
   font-size: 0.85rem;
+  pointer-events: none;
 }
 
+/* ========== BOTONES DEL HEADER ========== */
+.header-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.header-buttons .btn {
+  background: transparent;
+  border: 1px solid #1e3a8a;
+  color: #1e3a8a;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header-buttons .btn:hover {
+  background-color: #1e3a8a;
+  color: white;
+}
+
+/* ========== MENÚ DE NAVEGACIÓN ========== */
 nav {
   background-color: #dbe9ff;
   font-size: 0.9rem;
   color: #1e3a8a;
   user-select: none;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  padding: 1.25rem 0;
   margin-top: 2rem;
   margin-bottom: 2.5rem;
 }
 
-nav li {
+nav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 25px;
+}
+
+nav ul li {
   cursor: pointer;
   padding: 0.6rem 1.5rem;
   white-space: nowrap;
 }
 
-nav li:hover {
-  text-decoration: underline;
+nav ul li a {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: #1a3d7c;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s ease;
 }
 
+nav ul li a:hover,
+nav ul li a:focus,
+nav li:hover {
+  color: #004080;
+  border-bottom: 2px solid #004080;
+  text-decoration: none;
+}
+
+/* ========== TÍTULOS ========== */
+h1, h2, h3 {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 700;
+  color: #1a3d7c;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 28px;
+  text-align: center;
+}
+
+/* ========== BANNER DE OFERTA ========== */
 .offer-banner {
   background-color: #6b63d6;
   color: white;
@@ -70,24 +174,6 @@ nav li:hover {
   flex-wrap: nowrap;
   border-radius: 0.25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.btn-arrow {
-  border: 1px solid white;
-  color: white;
-  background: transparent;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.btn-arrow:hover {
-  background-color: #5a52c9;
 }
 
 .offer-text {
@@ -113,6 +199,24 @@ nav li:hover {
   font-size: 1rem;
 }
 
+.btn-arrow {
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-arrow:hover {
+  background-color: #5a52c9;
+}
+
 .btn-buy {
   background-color: #cbd5f7;
   color: black;
@@ -123,6 +227,7 @@ nav li:hover {
   cursor: pointer;
 }
 
+/* ========== CATEGORÍAS ========== */
 .category-header {
   background-color: #dbe9ff;
   color: #1e3a8a;
@@ -160,32 +265,104 @@ nav li:hover {
   object-fit: cover;
 }
 
-.category-text-top {
+.category-text-top,
+.category-text-bottom {
   position: absolute;
-  bottom: 2.25rem;
   left: 0.75rem;
   color: white;
+  text-shadow: 0 0 4px rgba(0,0,0,0.7);
+}
+
+.category-text-top {
+  bottom: 2.25rem;
   font-size: 0.75rem;
   font-weight: 300;
-  text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
 .category-text-bottom {
-  position: absolute;
   bottom: 0.5rem;
-  left: 0.75rem;
-  color: white;
   font-size: 1.25rem;
   font-weight: 700;
-  text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
-.img-accesorio {
-    width: 400px;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+/* ========== DETALLE PRODUCTO ========== */
+.detalle-producto .producto-detalle {
+  gap: 1rem;
 }
 
+.detalle-producto .producto-detalle img {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  display: block;
+  border-radius: 8px;
+  width: 390px;
+  height: 390px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
 
+/* ========== CATÁLOGO DE PRODUCTOS ========== */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card-body h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1e3a8a;
+}
+
+.price {
+  color: #dc2626;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: green;
+}
+
+.card .btn {
+  margin-top: 0.75rem;
+  padding: 0.5rem 1rem;
+  background-color: #6b63d6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.card .btn:hover {
+  background-color: #5a52c9;
+}

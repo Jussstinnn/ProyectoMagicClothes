@@ -4,4 +4,5 @@ import com.MagicClothes.domain.Usuario;
 
 public interface UsuarioService {
     void guardarUsuario(Usuario usuario);
+    Usuario buscarPorCorreo(String correo);
 }

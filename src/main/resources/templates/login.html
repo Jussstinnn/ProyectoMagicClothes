@@ -54,23 +54,36 @@
       margin-bottom: 10px;
       font-size: 0.9rem;
     }
-  </style>
+    .return-button {
+        margin-top: 10px;
+        background-color: #ccc;
+        color: #333;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+ </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Iniciar Sesión</h2>
 
-    <form th:action="@{/login}" method="post" th:object="${usuario}">
-      <div class="error-message" th:if="${error}" th:text="${error}"></div>
+    <form th:action="@{/login}" method="post">
+      <div class="error-message" th:if="${param.error}" th:text="'Correo o contraseña incorrectos'"></div>
 
-      <input type="email" th:field="*{correoElectronico}" placeholder="Correo electrónico" required>
-      <input type="password" th:field="*{contrasena}" placeholder="Contraseña" required>
+      <!-- Spring Security espera 'username' y 'password' -->
+      <input type="email" name="username" placeholder="Correo electrónico" required>
+      <input type="password" name="password" placeholder="Contraseña" required>
 
       <button type="submit">Ingresar</button>
     </form>
+    <button class="return-button" onclick="location.href='/'">Volver al inicio</button>
   </div>
 </body>
 </html>
-
 
 

@@ -1,155 +1,159 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Magic Clothes</title>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Magic Clothes</title>
 
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
-  <!-- CSS personalizado -->
-  <link rel="stylesheet" th:href="@{/estilos.css}">
-</head>
-<body>
-<div th:fragment="body_content">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <!-- CSS personalizado -->
+        <link rel="stylesheet" th:href="@{/css/estilos.css}" />
+    </head>
+    <body>
 
-  <!-- Header -->
-  <header class="site-header py-4">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
-      <div class="logo">LOGO</div>
+        <!-- Fragmento que se usará en plantilla.html -->
+        <div th:fragment="body_content">
 
-      <!-- Búsqueda + Filtros -->
-      <div class="d-flex align-items-center flex-wrap justify-content-center gap-2">
-        <form th:action="@{/productos/buscar}" method="get" class="d-flex align-items-center flex-wrap gap-2">
-          <input class="form-control" name="keyword" placeholder="Buscar productos" type="text" style="width: 250px;" />
+            <header class="site-header py-4">
+                <div class="container d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-          <div class="dropdown">
-            <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              🔎 Filtros
-            </button>
-            <div class="dropdown-menu p-4" style="min-width: 300px;">
-              <div class="mb-3">
-                <label class="form-label">Condición</label>
-                <select name="estado" class="form-select">
-                  <option value="">Todos</option>
-                  <option value="nuevo">Nuevo</option>
-                  <option value="usado">Usado</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Categoría</label>
-                <select name="categoria" class="form-select">
-                  <option value="">Todas</option>
-                  <option value="camisas">Camisas</option>
-                  <option value="pantalones">Pantalones</option>
-                  <option value="vestidos">Vestidos</option>
-                  <option value="accesorios">Accesorios</option>
-                  <option value="conjuntos">Conjuntos</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Precio</label>
-                <select name="precioRango" class="form-select">
-                  <option value="">Todos</option>
-                  <option value="menos10">Menos de ₡10,000</option>
-                  <option value="entre10y20">₡10,000 a ₡20,000</option>
-                  <option value="mas20">Más de ₡20,000</option>
-                </select>
-              </div>
-              <div class="text-end">
-                <button type="submit" class="btn btn-dark">Aplicar filtros</button>
-              </div>
+                    <div class="logo">LOGO</div>
+
+                    <!-- Búsqueda + Filtros centrado -->
+                    <div class="d-flex align-items-center flex-wrap justify-content-center gap-2">
+                        <form th:action="@{/productos/buscar}" method="get" class="d-flex align-items-center flex-wrap gap-2">
+                            <input class="form-control" name="keyword" placeholder="Buscar productos" type="text" style="width: 250px;" />
+
+                            <div class="dropdown">
+                                <button class="btn btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    🔎 Filtros
+                                </button>
+                                <div class="dropdown-menu p-4" style="min-width: 300px;">
+                                    <div class="mb-3">
+                                        <label class="form-label">Condición</label>
+                                        <select name="estado" class="form-select">
+                                            <option value="">Todos</option>
+                                            <option value="nuevo">Nuevo</option>
+                                            <option value="usado">Usado</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Categoría</label>
+                                        <select name="categoria" class="form-select">
+                                            <option value="">Todas</option>
+                                            <option value="camisas">Camisas</option>
+                                            <option value="pantalones">Pantalones</option>
+                                            <option value="vestidos">Vestidos</option>
+                                            <option value="accesorios">Accesorios</option>
+                                            <option value="conjuntos">Conjuntos</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Precio</label>
+                                        <select name="precioRango" class="form-select">
+                                            <option value="">Todos</option>
+                                            <option value="menos10">Menos de ₡10,000</option>
+                                            <option value="entre10y20">₡10,000 a ₡20,000</option>
+                                            <option value="mas20">Más de ₡20,000</option>
+                                        </select>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-dark">Aplicar filtros</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="header-buttons d-flex gap-2">
+                        <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+
+                        <div sec:authorize="isAnonymous()">
+                            <a href="/login" class="btn btn-outline-secondary btn-sm">Iniciar Sesión</a>
+                            <a href="/registro" class="btn btn-outline-secondary btn-sm">Crear cuenta</a>
+                        </div>
+
+                        <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+                            <span class="text-dark" th:text="${#authentication.name}">correo@ejemplo.com</span>
+                            <form th:action="@{/logout}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+                            </form>
+                        </div>
+
+                        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/pago'">Ir a pago</button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/historialCompra'">Historial compra</button>
+                    </div>
+            </header>
+
+
+            <!-- Menú -->
+            <div th:replace="fragments/menu :: menu"></div>
+
+
+            <!-- Carrusel Oferta Mujer -->
+            <div id="carouselOfertaMujer" class="carousel slide mb-5" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active text-center text-white py-5" style="background: linear-gradient(90deg, #0653e3, #1479ff);">
+                        <div class="container d-flex justify-content-center align-items-center flex-wrap gap-4">
+                            <img src="https://storage.googleapis.com/a1aa/image/c54a71fd-f721-47f6-59ec-8066e49ad6fd.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 1">
+                            <div>
+                                <h2 class="fw-bold">¡OFERTA ESPECIAL!</h2>
+                                <p>Por la compra de un brasier lleva el segundo con un</p>
+                                <p class="fw-bold text-warning">50% MENOS</p>
+                                <button class="btn btn-light">COMPRAR</button>
+                            </div>
+                            <img src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 2">
+                        </div>
+                    </div>
+                    <div class="carousel-item text-center text-white py-5" style="background: linear-gradient(90deg, #0653e3, #1479ff);">
+                        <div class="container d-flex justify-content-center align-items-center flex-wrap gap-4">
+                            <img src="https://storage.googleapis.com/a1aa/image/0a0e2997-3a50-4a33-8ba1-39cc37e40d4a.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 3">
+                            <div>
+                                <h2 class="fw-bold">¡SENSUALIDAD Y COMODIDAD!</h2>
+                                <p>Descubre nuestra colección de lencería 2025</p>
+                                <p class="fw-bold text-warning">¡Ideal para cada ocasión!</p>
+                                <button class="btn btn-light">VER COLECCIÓN</button>
+                            </div>
+                            <img src="https://storage.googleapis.com/a1aa/image/f045a6b0-1dd1-4718-86b4-e05c170d502f.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 4">
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselOfertaMujer" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselOfertaMujer" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
-          </div>
-        </form>
-      </div>
 
-      <!-- Botones -->
-      <div class="header-buttons d-flex gap-2">
-        <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
-        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/login'">Iniciar Sesión</button>
-        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/registro'">Crear cuenta</button>
-        <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/carrito'">Ver carrito</button>
-      </div>
-    </div>
-  </header>
+            <!-- Productos -->
+            <div class="container">
+                <div class="row justify-content-center g-4">
+                    <div class="col-6 col-sm-3 text-center">
+                        <img src="https://storage.googleapis.com/a1aa/image/f14db6ab-6b07-4535-21f8-ee05b17dc958.jpg" class="img-fluid rounded mb-2" alt="Dream angels">
+                        <p>Dream angels</p>
+                    </div>
+                    <div class="col-6 col-sm-3 text-center">
+                        <img src="https://storage.googleapis.com/a1aa/image/24fb54e4-d7a5-4fa3-7f6f-2384deec3314.jpg" class="img-fluid rounded mb-2" alt="Encanto íntimo">
+                        <p>Encanto íntimo</p>
+                    </div>
+                    <div class="col-6 col-sm-3 text-center">
+                        <img src="https://storage.googleapis.com/a1aa/image/f865c6d3-b553-4707-7e56-e728fcb3ee81.jpg" class="img-fluid rounded mb-2" alt="Diva">
+                        <p>Diva</p>
+                    </div>
+                </div>
+            </div>
 
-  <!-- Menú -->
-  <nav class="bg-white border-top border-bottom py-2">
-    <div class="container d-flex justify-content-center gap-4 flex-wrap">
-      <a class="text-primary fw-semibold text-decoration-none" href="/">INICIO</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/colecciones">COLECCIONES</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/camisas">CAMISAS</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/pantalones">PANTALONES</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/vestidos">VESTIDOS</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/accesorios">ACCESORIOS</a>
-      <a class="text-primary fw-semibold text-decoration-none" href="/contactenos">CONTACTENOS</a>
-    </div>
-  </nav>
-
-  <!-- Carrusel Oferta Mujer -->
-  <div id="carouselOfertaMujer" class="carousel slide mb-5" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active text-center text-white py-5" style="background: linear-gradient(90deg, #0653e3, #1479ff);">
-        <div class="container d-flex justify-content-center align-items-center flex-wrap gap-4">
-          <img src="https://storage.googleapis.com/a1aa/image/c54a71fd-f721-47f6-59ec-8066e49ad6fd.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 1">
-          <div>
-            <h2 class="fw-bold">¡OFERTA ESPECIAL!</h2>
-            <p>Por la compra de un brasier lleva el segundo con un</p>
-            <p class="fw-bold text-warning">50% MENOS</p>
-            <button class="btn btn-light">COMPRAR</button>
-          </div>
-          <img src="https://storage.googleapis.com/a1aa/image/424dfe88-033c-4ef6-2e60-375726916ade.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 2">
         </div>
-      </div>
-      <div class="carousel-item text-center text-white py-5" style="background: linear-gradient(90deg, #0653e3, #1479ff);">
-        <div class="container d-flex justify-content-center align-items-center flex-wrap gap-4">
-          <img src="https://storage.googleapis.com/a1aa/image/0a0e2997-3a50-4a33-8ba1-39cc37e40d4a.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 3">
-          <div>
-            <h2 class="fw-bold">¡SENSUALIDAD Y COMODIDAD!</h2>
-            <p>Descubre nuestra colección de lencería 2025</p>
-            <p class="fw-bold text-warning">¡Ideal para cada ocasión!</p>
-            <button class="btn btn-light">VER COLECCIÓN</button>
-          </div>
-          <img src="https://storage.googleapis.com/a1aa/image/f045a6b0-1dd1-4718-86b4-e05c170d502f.jpg" width="120" class="d-none d-md-block rounded" alt="Modelo Mujer 4">
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOfertaMujer" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselOfertaMujer" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-  </div>
 
-  <!-- Productos -->
-  <div class="container">
-    <div class="row justify-content-center g-4">
-      <div class="col-6 col-sm-3 text-center">
-        <img src="https://storage.googleapis.com/a1aa/image/f14db6ab-6b07-4535-21f8-ee05b17dc958.jpg" class="img-fluid rounded mb-2" alt="Dream angels">
-        <p>Dream angels</p>
-      </div>
-      <div class="col-6 col-sm-3 text-center">
-        <img src="https://storage.googleapis.com/a1aa/image/24fb54e4-d7a5-4fa3-7f6f-2384deec3314.jpg" class="img-fluid rounded mb-2" alt="Encanto íntimo">
-        <p>Encanto íntimo</p>
-      </div>
-      <div class="col-6 col-sm-3 text-center">
-        <img src="https://storage.googleapis.com/a1aa/image/f865c6d3-b553-4707-7e56-e728fcb3ee81.jpg" class="img-fluid rounded mb-2" alt="Diva">
-        <p>Diva</p>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>
 
 

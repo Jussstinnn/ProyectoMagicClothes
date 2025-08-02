@@ -8,16 +8,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class InicioController {
 
    @GetMapping("/")
-public String mostrarIndex(Model model) {
-    model.addAttribute("pagina", "index");
-    return "plantilla";
-}
-@GetMapping("/oferta-mujer")
+   public String mostrarIndex(Model model) {
+       model.addAttribute("pagina", "index");       // Fragmento a insertar
+       model.addAttribute("titulo", "Magic Clothes");  // Título dinámico
+       return "plantilla";                          // plantilla base Thymeleaf
+   }
+
+   @GetMapping("/oferta-mujer")
 public String mostrarOfertaMujer() {
     return "oferta-mujer"; 
 }
 
-
 }
-
-

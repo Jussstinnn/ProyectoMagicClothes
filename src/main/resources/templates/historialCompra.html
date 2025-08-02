@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <title>Historial de Compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}" />
+</head>
+<body>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Historial de Compras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/estilos.css}" />
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Magic Clothes</div>
+
+  <form class="search-form">
+      <input class="search-input" type="text" placeholder="Buscar productos" />
+      <i class="fas fa-search search-icon"></i>
+  </form>
+
+  <div class="header-buttons d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm">Reportar problema</button>
+
+      <div sec:authorize="isAnonymous()">
+          <a href="/login" class="btn btn-outline-secondary btn-sm">Iniciar Sesión</a>
+          <a href="/registro" class="btn btn-outline-secondary btn-sm">Crear cuenta</a>
+      </div>
+
+      <div sec:authorize="isAuthenticated()" class="d-flex align-items-center gap-2">
+          <span class="text-dark" th:text="${#authentication.name}">correo@ejemplo.com</span>
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-outline-secondary btn-sm">Cerrar sesión</button>
+          </form>
+      </div>
+
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/pago'">Ir a pago</button>
+      <button class="btn btn-outline-secondary btn-sm" onclick="location.href = '/historialCompra'">Historial compra</button>
+  </div>
+</header>
+     <!-- Menú -->
+    <div th:replace="fragments/menu :: menu"></div> 
+
+
+<main class="container">
+    <h2>Historial de compras</h2>
+
+    <div th:if="${#lists.isEmpty(compras)}" class="alert alert-info" style="text-align:center; margin-top:2rem;">
+        No hay compras registradas.
+    </div>
+
+    <section class="products">
+        <div th:each="compra : ${compras}" class="card">
+            <div class="card-body">
+                <h3 th:text="${compra.producto}">Nombre Producto</h3>
+                <p class="price" th:text="${'# ₡' + compra.monto}">₡0</p>
+                <p th:text="${#temporals.format(compra.fecha, 'dd/MM/yyyy')}">Fecha</p>
+                <p class="status" th:text="${compra.estado}">Estado</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
